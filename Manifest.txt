@@ -1,0 +1,7 @@
+HISTORY.md
+Manifest.txt
+README.md
+Rakefile
+lib/mrhyde.rb
+lib/mrhyde/tools.rb
+lib/mrhyde/version.rb
