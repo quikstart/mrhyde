@@ -4,8 +4,8 @@ static site quick starter scripts
 
 * home  :: [github.com/mrhydescripts/mrhyde](https://github.com/mrhydescripts/mrhyde)
 * bugs  :: [github.com/mrhydescripts/mrhyde/issues](https://github.com/mrhydescripts/mrhyde/issues)
-* gem   :: [rubygems.org/gems/mrhyde](https://rubygems.org/gems/mrhyde)
-* rdoc  :: [rubydoc.info/gems/mrhyde](http://rubydoc.info/gems/mrhyde)
+* gem   :: [rubygems.org/gems/mrhyde-tools](https://rubygems.org/gems/mrhyde-tools)
+* rdoc  :: [rubydoc.info/gems/mrhyde-tools](http://rubydoc.info/gems/mrhyde-tools)
 * forum :: [wwwmake](http://groups.google.com/group/wwwmake)
 
 
