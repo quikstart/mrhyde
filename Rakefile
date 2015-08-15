@@ -18,6 +18,8 @@ Hoe.spec 'mrhyde-tools' do
   self.history_file = 'HISTORY.md'
 
   self.extra_deps = [
+    ['logutils'],
+    ['textutils'],
     ['drjekyll'],
   ]
 
