@@ -22,7 +22,7 @@ EOS
     assert true  ## if we get here; everything is ok
   end
 
-  def test_starterii
+  def xxx_test_starterii
 
     $MRHYDE_WIZARD_IN = EchoIO.new( <<EOS )
 Another Beautiful Static Site

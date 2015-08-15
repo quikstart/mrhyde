@@ -24,6 +24,24 @@ class Builder
 
   def install_theme( name, opts= {} )
     puts "  handle install_theme #{name}, #{opts.inspect}"
+
+    ## themes_dir = "#{DrJekyll.root}/test/data"
+    ## catalog = Catalog.new( "#{themes_dir}/themes.yml" )
+    url = "https://github.com/drjekyllthemes/themes/raw/master/o/themes.yml"
+    catalog = DrJekyll::Catalog.from_url( url )
+
+    ## note for now assume name is key
+    ##   e.g. always downcase (e.g. Starter => starter)
+    key = name.downcase
+    theme = catalog.find( key )
+    if theme
+      pak = DrJekyll::Package.new( key, theme )
+      pak.download
+      pak.unzip( "./o/#{key}" )
+    else
+    ## todo: issue warning - why, why not??
+      fail "*** theme '#{key}' not found; sorry"
+    end
   end
 
   def config( opts={} )
