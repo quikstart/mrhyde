@@ -5,3 +5,6 @@ Rakefile
 lib/mrhyde.rb
 lib/mrhyde/tools.rb
 lib/mrhyde/version.rb
+lib/mrhyde/wizard.rb
+test/helper.rb
+test/test_wizard.rb
