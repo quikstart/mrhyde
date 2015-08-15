@@ -4,6 +4,7 @@ README.md
 Rakefile
 lib/mrhyde.rb
 lib/mrhyde/builder.rb
+lib/mrhyde/config.rb
 lib/mrhyde/tools.rb
 lib/mrhyde/version.rb
 lib/mrhyde/wizard.rb
@@ -11,4 +12,5 @@ test/helper.rb
 test/scripts/starter.rb
 test/scripts/starterii.rb
 test/test_builder.rb
+test/test_config.rb
 test/test_wizard.rb

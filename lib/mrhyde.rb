@@ -2,6 +2,7 @@
 
 ## stdlibs
 require 'pp'
+require 'yaml'
 
 ## 3rd party libs
 require 'textutils'      ## used for File.read_utf8
@@ -11,4 +12,4 @@ require 'drjekyll'
 require 'mrhyde/version'    # note: let version always go first
 require 'mrhyde/wizard'
 require 'mrhyde/builder'
-
+require 'mrhyde/config'
