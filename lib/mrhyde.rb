@@ -15,3 +15,16 @@ require 'mrhyde/version'    # note: let version always go first
 require 'mrhyde/wizard'
 require 'mrhyde/builder'
 require 'mrhyde/config'
+
+require 'mrhyde/cli/opts'
+require 'mrhyde/cli/main'
+
+
+module MrHyde
+  def self.main
+    exit Tool.new.run( ARGV )
+  end
+end # module MrHyde
+
+
+MrHyde.main if __FILE__ == $0

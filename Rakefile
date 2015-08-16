@@ -5,7 +5,7 @@ Hoe.spec 'mrhyde-tools' do
 
   self.version = MrHyde::VERSION
 
-  self.summary = "mrhyde - static site quick starter scripts"
+  self.summary = "mrhyde - jekyll command line tool .:. static site quick starter script wizard"
   self.description = summary
 
   self.urls    = ['https://github.com/mrhydescripts/mrhyde']

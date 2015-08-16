@@ -2,8 +2,12 @@ HISTORY.md
 Manifest.txt
 README.md
 Rakefile
+bin/mrh
+bin/mrhyde
 lib/mrhyde.rb
 lib/mrhyde/builder.rb
+lib/mrhyde/cli/main.rb
+lib/mrhyde/cli/opts.rb
 lib/mrhyde/config.rb
 lib/mrhyde/tools.rb
 lib/mrhyde/version.rb
@@ -13,4 +17,6 @@ test/scripts/starter.rb
 test/scripts/starterii.rb
 test/test_builder.rb
 test/test_config.rb
+test/test_install_theme.rb
+test/test_url.rb
 test/test_wizard.rb
