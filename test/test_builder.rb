@@ -17,20 +17,21 @@ Another Beautiful Static Site
 H. J.
 EOS
 
-    _ = MrHyde::Builder.load_file( "#{MrHyde.root}/test/scripts/starter.rb" )
+    _ = MrHyde::Builder.load_file( "#{MrHyde.root}/test/scripts/starter.rb", test: true )
 
     assert true  ## if we get here; everything is ok
   end
 
-  def xxx_test_starterii
+  def test_starterii
 
     $MRHYDE_WIZARD_IN = EchoIO.new( <<EOS )
 Another Beautiful Static Site
+http://example.github.io/repo
 H. J.
 1
 EOS
 
-    _ = MrHyde::Builder.load_file( "#{MrHyde.root}/test/scripts/starterii.rb" )
+    _ = MrHyde::Builder.load_file( "#{MrHyde.root}/test/scripts/starterii.rb", test: true )
 
     assert true  ## if we get here; everything is ok
   end

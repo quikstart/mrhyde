@@ -4,13 +4,13 @@ module MrHyde
 
 class Builder
 
-  def self.load_file( path )
+  def self.load_file( path, opts={} )
     code = File.read_utf8( path )
-    self.load( code )
+    self.load( code, opts )
   end
 
-  def self.load( code )
-    builder = Builder.new
+  def self.load( code, opts={} )
+    builder = Builder.new( opts )
     builder.instance_eval( code )
     builder
   end
@@ -18,36 +18,45 @@ class Builder
 
   include Wizard   ## mixin helpers for say, ask, yes?, no?, select, etc.
 
-  def initialize
-    puts "starting new MrHyde script (sitefile); lets go"
+  def initialize( opts={} )
+    puts "starting new MrHyde script (sitefile) #{opts.inspect}; lets go"
+    
+    @test       = opts[:dry_run] || opts[:test] || false
+    @output_dir = opts[:o] || '.'
   end
+
+  ## "global" builder options
+  def test?()      @test;       end   ## dry_run option (defaults to false)
+  def output_dir() @output_dir; end   ## ouptput (root) dir (defaults to . e.g. working folder)
+
 
   def install_theme( name, opts= {} )
     puts "  handle install_theme #{name}, #{opts.inspect}"
-    @theme_key = name.downcase
-  end
-
-  def install_theme_v2( name, opts= {} )
-    puts "  handle install_theme #{name}, #{opts.inspect}"
-
-    ## themes_dir = "#{DrJekyll.root}/test/data"
-    ## catalog = Catalog.new( "#{themes_dir}/themes.yml" )
-    url = "https://github.com/drjekyllthemes/themes/raw/master/o/themes.yml"
-    catalog = DrJekyll::Catalog.from_url( url )
 
     ## note for now assume name is key
     ##   e.g. always downcase (e.g. Starter => starter)
     @theme_key = key = name.downcase
-    theme = catalog.find( key )
-    if theme
-      pak = DrJekyll::Package.new( key, theme )
-      pak.download
-      pak.unzip( "./o/#{key}" )
+
+    ## themes_dir = "#{DrJekyll.root}/test/data"
+    ## catalog = Catalog.new( "#{themes_dir}/themes.yml" )
+    url = "https://github.com/drjekyllthemes/themes/raw/master/o/themes.yml"
+
+    if test?
+      # do nothing; dry run
     else
-    ## todo: issue warning - why, why not??
-      fail "*** theme '#{key}' not found; sorry"
+      catalog = DrJekyll::Catalog.from_url( url )
+      theme = catalog.find( key )
+      if theme
+        pak = DrJekyll::Package.new( key, theme )
+        pak.download
+        pak.unzip( "#{@output_dir}/#{key}" )
+      else
+        ## todo: issue warning - why, why not??
+        fail "*** theme '#{key}' not found; sorry"
+      end
     end
   end
+
 
   def config( opts={} )
     puts "  handle config block"
@@ -55,49 +64,56 @@ class Builder
     yield( c )
     ## pp c
     h = c.to_h
+
+    ##
+    # check for site.url  if present also
+    #  add site.baseurl|path
+
+    site_url = h['url']
+
+    if site_url.nil? || site_url.empty?        ## special case site_url is empty string ""
+      ## note: always add site url for now
+      ## todo/fix: warn if we overwrite "empty" site.url - why? why not?
+      h['url']     = 'http://example.com'   # note: no trailing slash (/) e.g. example.com/
+      h['baseurl'] = ''                     # note: no trailing slash (/) e.g. /
+      h['path']    = ''                     # (better) alias for baseurl
+    else
+      ## site_baseurl = h['baseurl']
+      ## site_path    = h['path']
+
+      ### calculate path/baseurl
+      url = URI.parse( site_url )
+      path = url.path.sub(/\/$/, '' )  ## note: cut off trailing slash if present e.g. '/' becomes ''
+
+      h['baseurl'] = path
+      h['path']    = path
+      ## todo/fix: warn if we overwrite baseurl/path we new values - why? why not?
+    end
+
     pp h
 
 
-    org = YAML.load_file( "./o/#{@theme_key}/_config.yml" )
-    pp org
+    if test?
+      ## do nothing; dry run
+    else
+      org = YAML.load_file( "#{@output_dir}/#{@theme_key}/_config.yml" )
+      pp org
 
+      ## for now always add props at the end
+      ##   improve later (patch using regex etc. - why? why not?)
 
-    ## for now always add props at the end
-    ##   improve later (patch using regex etc. - why? why not?)
+      new_settings = YAML.dump( h )
+      ## note: cut off leading --- if present
+      new_settings = new_settings.sub( /^-{3}\s*/, '')
 
-    new_settings = YAML.dump( h )
-    ## note: cut off leading --- if present
-    new_settings = new_settings.sub( /^-{3}\s*/, '')
-
-    File.open( "./o/#{@theme_key}/_config.yml", "a" ) do |f|
-      f.puts
-      f.puts "######################################"
-      f.puts "### Mr Hyde's Settings"
-      f.puts
-      f.puts new_settings
-    end
-
-=begin
-    ### patch _config.yml
-    ##  use regex for now to keep file as is
-
-    new_props = {}
-    up_props = {}
-
-    h.each do |k,v|
-      if org.has_key?(k)
-        if v.is_a? Hash
-
-        else
-          puts "update setting #{k} : #{v.inspect}"
-          up_props[k] = v
-        end
-      else
-        puts "new setting #{k} : #{v.inspect}"
-        new_props[k] = v
+      File.open( "#{@output_dir}/#{@theme_key}/_config.yml", "a" ) do |f|
+        f.puts
+        f.puts "######################################"
+        f.puts "### Mr Hyde's Settings"
+        f.puts
+        f.puts new_settings
       end
     end
-=end
 
   end # method config
 

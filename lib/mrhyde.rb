@@ -3,6 +3,8 @@
 ## stdlibs
 require 'pp'
 require 'yaml'
+require 'uri'
+
 
 ## 3rd party libs
 require 'textutils'      ## used for File.read_utf8
