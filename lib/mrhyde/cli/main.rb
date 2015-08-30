@@ -57,6 +57,9 @@ def self.fetch_script( name )
     text = File.read_utf8( local_script )
   else  ## fetch remote script
     url = "https://github.com/mrhydescripts/scripts/raw/master/#{name}.rb"
+
+    puts "GET #{url}"    ##  todo - add color e.g. .bold.green
+    
     ## assume utf8 text encoding for now
     worker = Fetcher::Worker.new
     text = worker.read_utf8!( url )

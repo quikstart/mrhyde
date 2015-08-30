@@ -16,7 +16,7 @@ class Builder
   end
 
 
-  include Wizard   ## mixin helpers for say, ask, yes?, no?, select, etc.
+  include Quik::Wizard   ## mixin helpers for say, ask, yes?, no?, select, etc.
 
   def initialize( opts={} )
     puts "starting new MrHyde script (sitefile) #{opts.inspect}; lets go"
@@ -39,7 +39,8 @@ class Builder
 
     ## themes_dir = "#{DrJekyll.root}/test/data"
     ## catalog = Catalog.new( "#{themes_dir}/themes.yml" )
-    url = "https://github.com/drjekyllthemes/themes/raw/master/o/themes.yml"
+    url = "https://github.com/drjekyllthemes/themes/raw/master/themes.yml"
+    puts "GET #{url}"    ##  todo - add color e.g. .bold.green
 
     if test?
       # do nothing; dry run
@@ -48,6 +49,9 @@ class Builder
       theme = catalog.find( key )
       if theme
         pak = DrJekyll::Package.new( key, theme )
+
+        ## todo/fix:
+        ##   add GET URL   w/ color e.g. bright/bold green
         pak.download
         pak.unzip( "#{@output_dir}/#{key}" )
       else
@@ -60,7 +64,7 @@ class Builder
 
   def config( opts={} )
     puts "  handle config block"
-    c = OpenConfig.new
+    c = Quik::OpenConfig.new
     yield( c )
     ## pp c
     h = c.to_h

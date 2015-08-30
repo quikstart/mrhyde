@@ -20,7 +20,8 @@ Hoe.spec 'mrhyde-tools' do
   self.extra_deps = [
     ['logutils'],
     ['textutils'],
-    ['drjekyll'],
+    ['drjekyll', '>= 0.1.1'],
+    ['quik',     '>= 0.3'],    
   ]
 
   self.licenses = ['Public Domain']

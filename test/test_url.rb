@@ -8,6 +8,11 @@
 require 'helper'
 
 
+#######
+##
+##  fix/todo:
+##     move to quik gem and test dir!!!!!!!!!!
+
 class TestUrl < MiniTest::Test
 
   def test_clean_path

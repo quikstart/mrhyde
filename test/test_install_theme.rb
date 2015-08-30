@@ -12,7 +12,7 @@ class TestInstallTheme < MiniTest::Test
 
   def test_starter
 
-    $MRHYDE_WIZARD_IN = EchoIO.new( <<EOS )
+    $QUIK_WIZARD_IN = EchoIO.new( <<EOS )
 Another Beautiful Static Site
 H. J.
 EOS

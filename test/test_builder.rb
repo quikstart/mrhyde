@@ -12,7 +12,7 @@ class TestBuilder < MiniTest::Test
 
   def test_starter
 
-    $MRHYDE_WIZARD_IN = EchoIO.new( <<EOS )
+    $QUIK_WIZARD_IN = EchoIO.new( <<EOS )
 Another Beautiful Static Site
 H. J.
 EOS
@@ -24,7 +24,7 @@ EOS
 
   def test_starterii
 
-    $MRHYDE_WIZARD_IN = EchoIO.new( <<EOS )
+    $QUIK_WIZARD_IN = EchoIO.new( <<EOS )
 Another Beautiful Static Site
 http://example.github.io/repo
 H. J.
